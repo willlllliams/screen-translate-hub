@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
+<style>
+  :root { --bg: #1f2023; --bar: #2a2b2f; --text: #e8e9eb; --muted: #9aa0a6; --accent: #5b9cff; --user: #2f3f5c; --warn: #f0a63a; --bad: #ef5350; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.45 "Segoe UI", "Microsoft YaHei UI", sans-serif; overflow: hidden; }
+  body { display: flex; flex-direction: column; border: 1px solid #3a3c41; box-sizing: border-box; }
+  #bar { flex: none; height: 32px; display: flex; align-items: center; gap: 6px; padding: 0 6px 0 10px; background: var(--bar); -webkit-app-region: drag; user-select: none; }
+  #bar .title { font-weight: 600; }
+  #state { font-size: 11px; padding: 1px 7px; border-radius: 9px; background: #3a3c41; color: var(--muted); }
+  #state.thinking { background: #2d4a7a; color: #fff; }
+  #state.paused { background: #5a4520; color: #fff; }
+  #bar .grow { flex: 1; }
+  #bar button { -webkit-app-region: no-drag; background: transparent; color: var(--muted); border: 0; border-radius: 4px; padding: 3px 7px; cursor: pointer; font: inherit; }
+  #bar button:hover { background: #3a3c41; color: var(--text); }
+  #status { flex: none; padding: 3px 10px; font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-bottom: 1px solid #2c2d31; }
+  #log { flex: 1; overflow-y: auto; padding: 8px 10px; }
+  .msg { margin: 0 0 8px; white-space: pre-wrap; word-wrap: break-word; }
+  .msg.user { background: var(--user); padding: 5px 8px; border-radius: 8px; margin-left: 24px; }
+  .msg.ai { }
+  .msg.note { color: var(--muted); font-size: 11px; }
+  .msg.err { color: var(--bad); font-size: 12px; }
+  .tools { color: var(--muted); font-size: 11px; margin: -4px 0 8px; }
+  #input { flex: none; display: flex; gap: 6px; padding: 8px; border-top: 1px solid #2c2d31; }
+  #text { flex: 1; resize: none; height: 38px; padding: 6px 8px; color: var(--text); background: #2a2b2f; border: 1px solid #3a3c41; border-radius: 6px; font: inherit; }
+  #text:focus { outline: none; border-color: var(--accent); }
+  #send { background: var(--accent); color: #fff; border: 0; border-radius: 6px; padding: 0 12px; cursor: pointer; font: inherit; }
+  #hint { position: absolute; right: 12px; bottom: 54px; font-size: 10px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="bar">
+  <span class="title">Assistant</span><span id="state">starting</span>
+  <span class="grow"></span>
+  <button id="pause" title="Pause: no screenshots, no AI">Pause</button>
+  <button id="clear" title="Remove the drawings on the screen">Clear</button>
+  <button id="stop" title="End the session">End</button>
+</div>
+<div id="status"></div>
+<div id="log"></div>
+<div id="input">
+  <textarea id="text" placeholder="Ask about what is on the screen (Alt+Shift+A)"></textarea>
+  <button id="send">Send</button>
+</div>
+<script src="assistant.js"></script>
+</body>
+</html>

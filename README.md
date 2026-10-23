@@ -6,7 +6,30 @@ screen-translate-hub 是一个自部署的屏幕翻译与 AI 平台。Windows �
 
 ## 当前阶段
 
-项目处于规格说明（specification，下文简称 spec）阶段，仓库中只有文档，没有代码。需求文档已经确定，spec 的各份文档已经写出初稿，原型阶段要实测确认的技术事项列在 [技术选型](docs/spec/15-tech-selection.md) 第 13 节；参数的默认值、验收指标的合格线和默认快捷键列在 [待定事项](docs/requirements/open-questions.md) 第 2、3 节。
+第一版（Windows 单机版）已经实现并在真实桌面上跑通，范围见 [第一版范围](docs/requirements/09-v1-scope.md)，实现方式见 [第一版实现](docs/spec/18-v1-implementation.md)，开发中的决定和实测结果记在 [开发记录](docs/dev-log.md)，交付说明见 [方案说明](docs/proposal.md)。第一版包括：
+
+- 单次截图翻译（画在原位或截图浮卡）和持续屏幕翻译（整屏、跟随活动窗口、指针下的窗口），变化检测、段落复用、译文缓存；
+- 多翻译源竞速：Claude Code 无头模式、兼容 OpenAI 的接口、Anthropic 接口、Bergamot 离线翻译（Firefox 的引擎和模型）、模拟翻译源；
+- 本机覆盖层的两种显示方式（原位底板、整屏压暗）和交互模式，平台窗口不进入采集；
+- 局域网网页观看（手机、平板、电脑浏览器），访问码保护；
+- AI 助手：心跳截屏、规则门控（另可接 jev）、AI 大脑（Claude Code 或 pi）通过平台工具看屏幕、画标注、在悬浮卡片里回答；
+- 本机历史记录。
+
+docs 中其余文档描述的是长期目标（Docker 后台、账号、跨设备、macOS 等），第一版对它们的取舍以第一版范围为准。
+
+## 运行第一版
+
+需要 Windows 11（Windows 10 2004 以上理论上可用，没有测试过）、Node.js 24、Python 3.12。
+
+```powershell
+npm install                 # TypeScript 部分和 Electron
+npm run setup:py            # .venv 与 Python 服务的依赖（采集、OCR）
+npm run desktop             # 构建并启动桌面主程序（托盘图标）
+```
+
+默认翻译源是本机已登录的 Claude Code（`claude` 在 PATH 上）加 Bergamot；Bergamot 第一次使用时下载约 50 MB 的模型。快捷键：Alt+Shift+S 截图翻译，Alt+Shift+C 开始或暂停持续翻译，Alt+Shift+H 显示或隐藏覆盖层，Alt+Shift+I 交互模式，Alt+Shift+A AI 助手。手机观看：托盘菜单"Copy viewer link"，在同一网络的手机上打开；第一次运行时 Windows 防火墙会询问是否允许 Node.js 接受连接；也可以在管理员 PowerShell 中运行 `tools/win/allow-viewer.ps1`，只放行观看端口、只在专用网络上放行。
+
+测试：`npm test`（TypeScript 各包）、`npm run test:py`（Python 服务）、`npm run typecheck`。经 SSH 在远程电脑上开发时的工具见 [第一版实现](docs/spec/18-v1-implementation.md) 第 16 节。
 
 ## 需求文档
 
@@ -23,6 +46,7 @@ screen-translate-hub 是一个自部署的屏幕翻译与 AI 平台。Windows �
 | [服务拆分](docs/requirements/06-services.md) | 服务的分类、拆分原则、运行协调器、部署形式、注册与接口版本 |
 | [桌面平台](docs/requirements/07-desktop-platforms.md) | Windows 与 macOS 的最低版本、依赖的系统能力、系统权限、安装分发和平台差异 |
 | [使用场景](docs/requirements/08-scenarios.md) | 五个典型场景：用户的操作、平台的响应，以及对应的需求与规格说明章节 |
+| [第一版范围](docs/requirements/09-v1-scope.md) | 第一版做什么、不做什么，补充的需求：显示方式切换、同语言不翻译、翻译源、局域网观看、快捷键、AI 助手 |
 | [待定事项](docs/requirements/open-questions.md) | 已识别但尚未确定的问题 |
 
 ## 规格说明
@@ -46,6 +70,8 @@ screen-translate-hub 是一个自部署的屏幕翻译与 AI 平台。Windows �
 | [部署与运维](docs/spec/14-deployment.md) | 后台组成、首次部署、证书、透传中转、升级、备份与恢复、出站代理、桌面端发行 |
 | [技术选型](docs/spec/15-tech-selection.md) | 许可规则、语言与框架、服务协议、后台组件、OCR 与翻译引擎、模型、许可义务 |
 | [验收与测试](docs/spec/16-acceptance.md) | 验收样本、测试替身、指标定义、竞速与平台的测试方法 |
+| [AI 助手](docs/spec/17-assistant.md) | 会话、心跳、门控、AI 大脑、平台工具、屏幕标注、AI 卡片 |
+| [第一版实现](docs/spec/18-v1-implementation.md) | 第一版的技术选型、进程、协议承载、代码结构、各模块的函数 |
 
 ## 开发原则
 

@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
+<style>
+  html, body { margin: 0; height: 100%; cursor: crosshair; background: #000; user-select: none; overflow: hidden; }
+  #bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #dim { position: absolute; inset: 0; background: rgba(0,0,0,.35); }
+  #box { position: absolute; display: none; border: 1px solid #fff; box-shadow: 0 0 0 9999px rgba(0,0,0,.35); }
+  #hint { position: absolute; left: 50%; top: 18px; transform: translateX(-50%); padding: 6px 12px; border-radius: 6px; background: rgba(0,0,0,.75); color: #fff; font: 13px "Segoe UI", "Microsoft YaHei UI", sans-serif; }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="dim"></div>
+<div id="box"></div>
+<div id="hint">Drag to select the area to translate. Esc cancels.</div>
+<script src="select.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="no-referrer">
+<title>Screen Translate</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header id="bar">
+  <span id="dot" class="dot"></span>
+  <span id="title">Connecting…</span>
+  <select id="sourceSel" hidden aria-label="Source"></select>
+  <button id="btnSettings" type="button" aria-label="Display settings">Aa</button>
+</header>
+
+<main id="main">
+  <div id="empty" hidden>
+    <p class="big">Waiting for a screen</p>
+    <p>Start continuous translation on the desktop with screen sharing on. This page updates by itself.</p>
+  </div>
+  <div id="stage" hidden>
+    <canvas id="frame"></canvas>
+    <div id="layer"></div>
+    <div id="banner" hidden></div>
+  </div>
+  <div id="list" hidden></div>
+</main>
+
+<section id="panel" class="sheet" hidden>
+  <div class="label">Original</div>
+  <div id="pSource" class="text"></div>
+  <div class="label" id="pTransLabel">Translation</div>
+  <div id="pTrans" class="text"></div>
+  <div class="row">
+    <button id="pCopy" type="button">Copy</button>
+    <button id="pClose" type="button" class="secondary">Close</button>
+  </div>
+</section>
+
+<section id="settings" class="sheet" hidden>
+  <h2>Display</h2>
+  <div class="seg" role="radiogroup" aria-label="Layout">
+    <label><input type="radio" name="layout" value="picture"> On the picture</label>
+    <label><input type="radio" name="layout" value="list"> As a list</label>
+  </div>
+  <div class="seg pic" role="radiogroup" aria-label="Display mode">
+    <label><input type="radio" name="mode" value="plate"> Plates</label>
+    <label><input type="radio" name="mode" value="dim"> Dim screen</label>
+  </div>
+  <label class="check"><input type="checkbox" id="sShow"> Show translation</label>
+  <label class="check pic"><input type="checkbox" id="sFrame"> Show screen image</label>
+  <label class="range">Text size <input type="range" id="sFont" min="0.7" max="2" step="0.05"></label>
+  <label class="range pic">Plate opacity <input type="range" id="sOpacity" min="0.3" max="1" step="0.02"></label>
+  <label class="range pic">Dim brightness <input type="range" id="sBright" min="0.1" max="0.8" step="0.05"></label>
+  <div class="seg pic" role="radiogroup" aria-label="Fit">
+    <label><input type="radio" name="fit" value="width"> Fit width</label>
+    <label><input type="radio" name="fit" value="screen"> Fit screen</label>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="Update">
+    <label><input type="radio" name="refresh" value="immediate"> Update at once</label>
+    <label><input type="radio" name="refresh" value="complete"> After each batch</label>
+  </div>
+  <label class="check"><input type="checkbox" id="sSaver"> Data saver</label>
+  <div class="row">
+    <button id="sClose" type="button">Done</button>
+    <button id="sForget" type="button" class="secondary">Forget access code</button>
+  </div>
+</section>
+
+<section id="login" hidden>
+  <p class="big">Access code</p>
+  <p>Enter the access code shown in the desktop app's tray menu.</p>
+  <input id="tokenInput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Access code">
+  <button id="tokenGo" type="button">Connect</button>
+  <p id="loginMsg" class="warn"></p>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>

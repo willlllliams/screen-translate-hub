@@ -1,0 +1,22 @@
+{
+  "name": "@sth/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node build.mjs && electron ."
+  },
+  "dependencies": {
+    "@sth/agent-core": "*",
+    "@sth/model": "*",
+    "@sth/render": "*",
+    "@sth/wire": "*",
+    "@sth/workflow": "*",
+    "koffi": "^3.3.3"
+  },
+  "devDependencies": {
+    "electron": "^45.0.0"
+  }
+}

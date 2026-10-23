@@ -1,0 +1,8 @@
+# Python services (capture, OCR) on Windows, Python 3.12. Versions as tested.
+numpy==2.5.4
+opencv-python==5.0.0.93
+onnxruntime==1.31.0
+rapidocr==3.10.0
+windows-capture==2.0.1
+websockets==17.3
+msgpack==1.2.3

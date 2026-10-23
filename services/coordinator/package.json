@@ -1,0 +1,19 @@
+{
+  "name": "@sth/coordinator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "@sth/model": "*",
+    "@sth/render": "*",
+    "@sth/service-kit": "*",
+    "@sth/wire": "*",
+    "@sth/workflow": "*"
+  }
+}
